@@ -1,21 +1,76 @@
 %% Load Qbot2 Data
 % David Olson, 01 Oct 2021
 
+% Start Fresh
 close all
 clear
 clc
 
+% Load User Functions
+addpath('Nav_Functions', 'Plot_Functions', 'Plot_Functions/plot_functions')
+
+%% Select Aiding Sensor Configuration
+
+% Allow User to Select Aiding Sensor Configuration
+ASC = menu('Select Aiding Sensor Configuration', 'IMU Only', ...
+           'IMU + Odo', 'IMU + Kinect', 'IMU + Odo + Kinect', ...
+           'IMU + Odo + Kinect + Baro');
+
+% Select Desired Settings
+switch ASC       
+    case 1
+        
+        % Set Aiding Sensor Config
+        P.aiding_sensor_config = 0;
+        
+        % Set Desired Plot Flags
+        P.plot.full_3D_view = false;
+        P.plot.plot_meas_flag = true;
+        P.plot.plot_est_flag = false;
+        P.plot.plot_aiding_sensor_meas = true;
+        
+    case 2
+        
+        % Set Aiding Sensor Config
+        P.aiding_sensor_config = 4;
+        
+        % Set Desired Plot Flags
+        P.plot.full_3D_view = false;
+        P.plot.plot_meas_flag = false;
+        P.plot.plot_est_flag = false;
+        P.plot.plot_aiding_sensor_meas = true;
+        
+    case 3
+        P.aiding_sensor_config = 5;
+    case 4
+        P.aiding_sensor_config = 6;
+    case 5
+        P.aiding_sensor_config = 7;
+    otherwise
+        error('Aiding Sensor Configuration not valid')
+end
+
+clear ASC
+
 %% Load Desired Data
 
+% Load Data File
 load('c__Complete_Data_Sets/SBT_CCW.mat')
+
+% Set GRound Truth for Plot
+% 0.) SBT_CCW
+% 1.) SBT_CW
+% 2.) King
+P.plot.ground_truth = 0;  
 
 % Save to Structure
 P.Fs = Fs;                         % Hz
 P.dt = dt;                         % s
 P.t = t;                           % s
+P.t_end = t(end);                  % s
 P.init_time = init_time;           % s
-P.accel = accel;                   % m/s^2
-P.gyro = gyro;                     % rad/s
+P.accel = double(accel);           % m/s^2
+P.gyro = double(gyro);             % rad/s
 P.odo = odo;                       % m
 P.theta_meas = theta_meas;         % rad
 P.theta_sigmas = theta_sigmas;     % rad
@@ -26,7 +81,7 @@ P.psi_sw_sigmas = psi_sw_sigmas;   % rad
 
 % Clear Variables
 clear Fs dt t init_time accel gyro odo theta_meas theta_sigmas
-clear psi_fw_meas psi_fw_sigmas psi_sw_meas psi_fw_sigmas
+clear psi_fw_meas psi_fw_sigmas psi_sw_meas psi_sw_sigmas
 
 %% Load Supporting Data
 
@@ -49,7 +104,7 @@ clear b_a_FB b_g_FB M_a M_g C_b__imu
 % Earth Characteristics (WGS-84 Values)
 P.w_ie = 72.92115167e-6;                   % Earth's rotational rate (rad/s)
 P.w_i__i_e = [0; 0; P.w_ie];               % Angular velocity of {e} wrt {i} resolved in {i} (rad/s)
-P.Ohm_i__i_e = [0,      -P.w_ie, 0; ...         % Skew symmetric version of w_i__i_e (rad/s)
+P.Ohm_i__i_e = [0,      -P.w_ie, 0; ...    % Skew symmetric version of w_i__i_e (rad/s)
                 P.w_ie,  0,      0; ...
                 0,       0,      0];
 P.mu = 3.986004418e14;      % Earth's gravitational constant (m^3/s^2)
