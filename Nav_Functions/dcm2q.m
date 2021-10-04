@@ -29,14 +29,30 @@ Tr3 = -C(1,1) - C(2,2) + C(3,3);    % = 4 q3^2 - 1
 [Trn,i] = max([Tr0, Tr1, Tr2, Tr3]);
 qn      = sqrt(Trn+1)/2;
 
-switch i
- case 1  % Qn = q0
-  q = [qn; (C(3,2)-C(2,3))/(4*qn); (C(1,3)-C(3,1))/(4*qn); (C(2,1)-C(1,2))/(4*qn)];
- case 2  % Qn = q1
-  q = [(C(3,2)-C(2,3))/(4*qn); qn; (C(2,1)+C(1,2))/(4*qn); (C(1,3)+C(3,1))/(4*qn)];
- case 3  % Qn = q2
-  q = [(C(1,3)-C(3,1))/(4*qn); (C(2,1)+C(1,2))/(4*qn); qn; (C(3,2)+C(2,3))/(4*qn)];
- case 4  % Qn = q3
-  q = [(C(2,1)-C(1,2))/(4*qn); (C(1,3)+C(3,1))/(4*qn); (C(3,2)+C(2,3))/(4*qn); qn];
-end       
+% Not Using Switch Cases because Simulink freaks out
+if (i == 1)  % Qn = q0
+    q = [qn; (C(3,2)-C(2,3))/(4*qn); (C(1,3)-C(3,1))/(4*qn); (C(2,1)-C(1,2))/(4*qn)];
+elseif (i == 2)  % Qn = q1
+    q = [(C(3,2)-C(2,3))/(4*qn); qn; (C(2,1)+C(1,2))/(4*qn); (C(1,3)+C(3,1))/(4*qn)];
+elseif (i == 3)  % Qn = q2
+    q = [(C(1,3)-C(3,1))/(4*qn); (C(2,1)+C(1,2))/(4*qn); qn; (C(3,2)+C(2,3))/(4*qn)];
+elseif (i == 4)  % Qn = q3
+    q = [(C(2,1)-C(1,2))/(4*qn); (C(1,3)+C(3,1))/(4*qn); (C(3,2)+C(2,3))/(4*qn); qn];
+else
+    error('Something is wrong in dcm2q there bud')
+end
+
 end % Close function
+
+
+% switch i
+%  case 1  % Qn = q0
+%   q = [qn; (C(3,2)-C(2,3))/(4*qn); (C(1,3)-C(3,1))/(4*qn); (C(2,1)-C(1,2))/(4*qn)];
+%  case 2  % Qn = q1
+%   q = [(C(3,2)-C(2,3))/(4*qn); qn; (C(2,1)+C(1,2))/(4*qn); (C(1,3)+C(3,1))/(4*qn)];
+%  case 3  % Qn = q2
+%   q = [(C(1,3)-C(3,1))/(4*qn); (C(2,1)+C(1,2))/(4*qn); qn; (C(3,2)+C(2,3))/(4*qn)];
+%  case 4  % Qn = q3
+%   q = [(C(2,1)-C(1,2))/(4*qn); (C(1,3)+C(3,1))/(4*qn); (C(3,2)+C(2,3))/(4*qn); qn];
+% end       
+% end % Close function

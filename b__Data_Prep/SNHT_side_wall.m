@@ -22,7 +22,7 @@ function [psi_ML, psi_sigma] = SNHT_side_wall(xyz, plot_flag)
 K = length(xyz);
 
 % psi bins
-psi = (-135 : 1 : 135) * pi/180;
+psi = [(-120 : 1 : -60) * pi/180, (60 : 1 : 120) * pi/180];
 M = length(psi); 
 
 %- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

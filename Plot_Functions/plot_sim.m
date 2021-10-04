@@ -13,6 +13,10 @@ plot_meas(out, P)
 
 plot_aiding_sensor_meas(out, P)
 
+%% Plot Kalman Filter Measurement Update Signals --------------------------
+
+plot_KF_meas(out, P)
+
 % %% Plot IMU I/O -----------------------------------------------------------
 % 
 % plot_IMU(accel_flag, gyro_flag, delta_accel_flag, delta_gyro_flag, out, P)

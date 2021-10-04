@@ -7,7 +7,28 @@ clear
 clc
 
 % Load User Functions
-addpath('Nav_Functions', 'Plot_Functions', 'Plot_Functions/plot_functions')
+addpath('Nav_Functions', 'Plot_Functions', ...
+        'Plot_Functions/plot_functions', 'User_Functions')
+
+%% Load Desired Data
+
+% Load Data File
+load('c__Complete_Data_Sets/SBT_CCW.mat');    
+
+%% Select Plotting Parameters
+
+% Set Desired Plot Flags
+P.plot.plot_meas_flag = false;
+P.plot.plot_aiding_sensor_meas = true;
+P.plot.plot_KF_meas = true;
+P.plot.plot_est_flag = false;
+P.plot.full_3D_view = false;
+
+% Set Ground Truth for Plotting
+% 0.) SBT_CCW
+% 1.) SBT_CW
+% 2.) King Building
+P.plot.ground_truth = 0;
 
 %% Select Aiding Sensor Configuration
 
@@ -16,72 +37,23 @@ ASC = menu('Select Aiding Sensor Configuration', 'IMU Only', ...
            'IMU + Odo', 'IMU + Kinect', 'IMU + Odo + Kinect', ...
            'IMU + Odo + Kinect + Baro');
 
-% Select Desired Settings
-switch ASC       
-    case 1
-        
-        % Set Aiding Sensor Config
-        P.aiding_sensor_config = 0;
-        
-        % Set Desired Plot Flags
-        P.plot.full_3D_view = false;
-        P.plot.plot_meas_flag = true;
-        P.plot.plot_est_flag = false;
-        P.plot.plot_aiding_sensor_meas = true;
-        
-    case 2
-        
-        % Set Aiding Sensor Config
-        P.aiding_sensor_config = 4;
-        
-        % Set Desired Plot Flags
-        P.plot.full_3D_view = false;
-        P.plot.plot_meas_flag = false;
-        P.plot.plot_est_flag = false;
-        P.plot.plot_aiding_sensor_meas = true;
-        
-    case 3
-        P.aiding_sensor_config = 5;
-    case 4
-        P.aiding_sensor_config = 6;
-    case 5
-        P.aiding_sensor_config = 7;
-    otherwise
-        error('Aiding Sensor Configuration not valid')
-end
-
-clear ASC
-
-%% Load Desired Data
-
-% Load Data File
-load('c__Complete_Data_Sets/SBT_CCW.mat')
-
-% Set GRound Truth for Plot
-% 0.) SBT_CCW
-% 1.) SBT_CW
-% 2.) King
-P.plot.ground_truth = 0;  
-
-% Save to Structure
-P.Fs = Fs;                         % Hz
-P.dt = dt;                         % s
-P.t = t;                           % s
-P.t_end = t(end);                  % s
-P.init_time = init_time;           % s
-P.accel = double(accel);           % m/s^2
-P.gyro = double(gyro);             % rad/s
-P.odo = odo;                       % m
-P.theta_meas = theta_meas;         % rad
-P.theta_sigmas = theta_sigmas;     % rad
-P.psi_fw_meas = psi_fw_meas;       % rad
-P.psi_fw_sigmas = psi_fw_sigmas;   % rad
-P.psi_sw_meas = psi_sw_meas;       % rad
-P.psi_sw_sigmas = psi_sw_sigmas;   % rad
-
-% Clear Variables
-clear Fs dt t init_time accel gyro odo theta_meas theta_sigmas
-clear psi_fw_meas psi_fw_sigmas psi_sw_meas psi_sw_sigmas
+       % Select Desired Settings
+       switch ASC
+           case 1
+               P.aiding_sensor_config = 0;
+           case 2
+               P.aiding_sensor_config = 4;
+           case 3
+               P.aiding_sensor_config = 5;
+           case 4
+               P.aiding_sensor_config = 6;
+           case 5
+               P.aiding_sensor_config = 7;
+           otherwise
+               error('Aiding Sensor Configuration not valid')
+       end
+       
+       clear ASC
 
 %% Load Supporting Data
 
@@ -117,9 +89,9 @@ P.f = 1 / 298.257223563;    % Flattening
 %% Enter Lat/Long/Height from Test Location
 
 % Test Location:  AXFAB Building at ERAU, Prescott AZ
-P.L_b = 34.61473980341071 * pi/180;          % rad
-P.lambda_b = -112.45000967782227 * pi/180;   % rad
-P.h_b = 1609.34; % m
+P.L_b = 34.614939 * pi/180;          % rad
+P.lambda_b = 247.549025 * pi/180;   % rad
+P.h_b = 1557; % m
 
 % Compute Additional Parameters
 P.R_N = (P.R0*(1 - P.e^2)) / ((1 - P.e^2*sin(P.L_b)^2)^3/2);  % m
@@ -131,6 +103,12 @@ P.r_e__e_t = [(P.R_E + P.h_b)*cos(P.L_b)*cos(P.lambda_b); ...
               (P.R_E + P.h_b)*cos(P.L_b)*sin(P.lambda_b); ...  
               (P.R_E*(1 - P.e^2) + P.h_b) * sin(P.L_b)];
 P.Ohm_t__i_e = P.C_e__t' * P.Ohm_i__i_e * P.C_e__t;
+
+%% Initialize Measurementes based on first ten seconds
+
+[P.f_b__i_b_meas, P.w_b__i_b_meas] = calibrate_imu(P);
+
+[P.C_t__b_init, P.H_avg, P.pitch_trans_align] = init_conditions(P);
 
 %% Open Simulation
 
