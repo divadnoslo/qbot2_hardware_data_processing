@@ -18,11 +18,13 @@ load('c__Complete_Data_Sets/SBT_CCW.mat');
 %% Select Plotting Parameters
 
 % Set Desired Plot Flags
+
 P.plot.plot_meas_flag = false;
-P.plot.plot_aiding_sensor_meas = true;
-P.plot.plot_KF_meas = true;
-P.plot.plot_est_flag = false;
-P.plot.full_3D_view = false;
+P.plot.plot_aiding_sensor_meas_flag = false;
+P.plot.plot_KF_meas_flag = true;
+P.plot.plot_KF_error_est_flag = false;
+P.plot.plot_PVA_est_flag = true;
+P.plot.full_3D_view_flag = false;
 
 % Set Ground Truth for Plotting
 % 0.) SBT_CCW
@@ -60,6 +62,7 @@ ASC = menu('Select Aiding Sensor Configuration', 'IMU Only', ...
 % Load Transfer Alignment and Transfer Cal Data
 load('d__Supporting_Data/Trans_Align.mat')
 load('d__Supporting_Data/Trans_Cal.mat')
+load('d__Supporting_Data/IMU_Cal_Varying_Error_Sources.mat')
 
 % Save Data to Structure
 P.b_a_FB = b_a_FB;
@@ -67,9 +70,16 @@ P.b_g_FB = b_g_FB;
 P.M_a = M_a; 
 P.M_g = M_g;
 P.C_b__imu = C_b__imu;
+P.accel_VRW = accel_VRW;
+P.gyro_ARW = gyro_ARW;
+P.sigma_n_accel = sigma_n_accel;
+P.sigma_n_gyro = sigma_n_gyro;
+P.cor_time = 1;
 
 % Clear Variables
 clear b_a_FB b_g_FB M_a M_g C_b__imu
+clear accel_std accel_VRW gyro_ARW gyro_std 
+clear sigma_ARW sigma_n_accel sigma_n_gyro sigma_VRW
 
 %% Provide Initiialization Parameters
 

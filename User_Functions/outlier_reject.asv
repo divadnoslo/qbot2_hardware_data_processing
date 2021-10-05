@@ -1,0 +1,10 @@
+function [reject_flag, SNHT_avail] = outlier_reject(delta_k_t__t_b_est, delta_k_t__t_b_meas, R_k)
+
+% Set Threshold
+threshold = 1.5;
+
+% Compute Mahalonobis Distnaces
+D = sqrt((z_k_2 - delta_k_t__t_b_est) * inv(R_k) * (z_k_2 - delta_k_t__t_b_est)
+
+end
+
