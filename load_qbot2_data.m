@@ -23,7 +23,7 @@ P.plot.plot_meas_flag = false;
 P.plot.plot_aiding_sensor_meas_flag = false;
 P.plot.plot_KF_meas_flag = true;
 P.plot.plot_KF_error_est_flag = false;
-P.plot.plot_PVA_est_flag = true;
+P.plot.plot_PVA_est_flag = false;
 P.plot.full_3D_view_flag = false;
 
 % Set Ground Truth for Plotting

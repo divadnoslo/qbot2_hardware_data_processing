@@ -1,6 +1,6 @@
 function plot_aiding_sensor_meas(out, P)
 
-if (P.plot.plot_aiding_sensor_meas == true)
+if (P.plot.plot_aiding_sensor_meas_flag == true)
 
     % Extract Time
     t = P.t;
@@ -23,21 +23,17 @@ if (P.plot.plot_aiding_sensor_meas == true)
     %% Plot Depth Camera Aiding
     if ((P.aiding_sensor_config == 5) || (P.aiding_sensor_config == 6) || (P.aiding_sensor_config == 7))
         
-%         % Determine Number of Frames
-%         num_frames = sum(out.SNHT_avail);
-%         n = 1 : num_frames;
-%         ypr = zeros(3, num_frames);
-%         
-%         % Shorten Down C_t__b_cam
-%         C_t__b_cam = out.C_t__b_cam(:,:,logical(out.SNHT_avail));
+        % Determine Number of Frames
+        num_frames = sum(out.SNHT_avail);
+        n = 1 : num_frames;
+        ypr = zeros(3, num_frames);
         
-        n = 1 : length(t);
-        num_frames = n(end);
-        C_t__b_cam = out.C_t__b_cam;
+        % Shorten Down C_t__b_cam
+        C_t__b_cam = out.C_t__b_cam(:,:,logical(out.SNHT_avail));
 
         % Plot C_t__b_cam Results
         for k = 1 : num_frames
-            [ypr(3,:), ypr(2,:), ypr(1,:)] = dcm2ypr(C_t__b_cam(:,:,k));
+            [ypr(3,k), ypr(2,k), ypr(1,k)] = dcm2ypr(C_t__b_cam(:,:,k));
         end
         
         % Plot Euler Rates of C_t__b_cam

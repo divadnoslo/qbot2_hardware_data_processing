@@ -2,12 +2,7 @@ function plot_3D_view(out, P)
 
 %% Plot 3D View
 
-if (P.plot.full_3D_view == true)
-    
-    % Set Meas to Est for Aid Config = 0
-    if (P.aiding_sensor_config == 0)
-        out.r_t__t_b_est = out.r_t__t_b_meas;
-    end
+if (P.plot.full_3D_view_flag == true)
     
     % Rotate r_t__t_b data into C_c__c_b
     C_v__t = rotate_x(pi);
