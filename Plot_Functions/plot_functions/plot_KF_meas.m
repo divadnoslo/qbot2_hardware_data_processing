@@ -85,32 +85,32 @@ if (P.plot.plot_KF_meas_flag == true)
         ylabel('\delta\psi^t_t_b (\circ)')
         grid on
         
-        % Shorten Down Sigmas
-        theta_sigma = out.theta_sigma(logical(out.SNHT_avail));
-        psi_sigma = out.psi_sigma(logical(out.SNHT_avail));
-        
-        % Plot Extracted SNHT Sigmas
-        figure
-        hold on
-        subplot(2,1,1)
-        plot(n, theta_sigma * 180/pi, 'g*')
-        title('SNHT Pitch Uncertianty:  \sigma_\theta')
-        xlabel('Time (s)')
-        xlim([0 n(end)])
-        ylabel('\sigma_\theta (\circ)')
-        grid on
-        subplot(2,1,2)
-        hold on
-        plot(n, psi_sigma * 180/pi, 'b*')
-        title('SNHT Yaw Uncertianty:  \sigma_\psi')
-        xlabel('Time (s)')
-        xlim([0 n(end)])
-        ylabel('\sigma_\psi (\circ)')
-        grid on
+%         % Shorten Down Sigmas
+%         theta_sigma = out.theta_sigma(logical(out.SNHT_avail));
+%         psi_sigma = out.psi_sigma(logical(out.SNHT_avail));
+%         
+%         % Plot Extracted SNHT Sigmas
+%         figure
+%         hold on
+%         subplot(2,1,1)
+%         plot(n, theta_sigma * 180/pi, 'g*')
+%         title('SNHT Pitch Uncertianty:  \sigma_\theta')
+%         xlabel('Time (s)')
+%         xlim([0 n(end)])
+%         ylabel('\sigma_\theta (\circ)')
+%         grid on
+%         subplot(2,1,2)
+%         hold on
+%         plot(n, psi_sigma * 180/pi, 'b*')
+%         title('SNHT Yaw Uncertianty:  \sigma_\psi')
+%         xlabel('Time (s)')
+%         xlim([0 n(end)])
+%         ylabel('\sigma_\psi (\circ)')
+%         grid on
         
         % Plot Angle Axis Error of delta_C_t__b_meas
         figure
-        subplot(4,1,1)
+        subplot(3,1,1)
         hold on
         plot(n, z_k_2(:,1) * 180/pi, 'r*')
         title('KF Meas: Error in Angle Axis Term 1 (\deltak_1)')
@@ -118,7 +118,7 @@ if (P.plot.plot_KF_meas_flag == true)
         xlim([0 n(end)])
         ylabel('\deltak_1 (\circ)')
         grid on
-        subplot(4,1,2)
+        subplot(3,1,2)
         hold on
         plot(n, z_k_2(:,2) * 180/pi, 'g*')
         title('KF Meas: Error in Angle Axis Term 2 (\deltak_2)')
@@ -126,7 +126,7 @@ if (P.plot.plot_KF_meas_flag == true)
         xlim([0 n(end)])
         ylabel('\deltak_2 (\circ)')
         grid on
-        subplot(4,1,3)
+        subplot(3,1,3)
         hold on
         plot(n, z_k_2(:,3) * 180/pi, 'b*')
         title('KF Meas: Error in Angle Axis Term 3 (\deltak_3)')
@@ -134,14 +134,14 @@ if (P.plot.plot_KF_meas_flag == true)
         xlim([0 n(end)])
         ylabel('\deltak_3 (\circ)')
         grid on
-        subplot(4,1,4)
-        hold on
-        plot(t, out.d, 'k')
-        title('Outlier Rejection:  Mahalanobis Distance of each Measurement')
-        xlabel('Time (s)')
-        xlim([0 t(end)])
-        ylabel('Mahalanobis Distance (ratio)')
-        grid on
+%         subplot(4,1,4)
+%         hold on
+%         plot(t, out.d, 'k')
+%         title('Outlier Rejection:  Mahalanobis Distance of each Measurement')
+%         xlabel('Time (s)')
+%         xlim([0 t(end)])
+%         ylabel('Mahalanobis Distance (ratio)')
+%         grid on
         
     end
     

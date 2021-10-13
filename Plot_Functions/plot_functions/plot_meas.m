@@ -82,7 +82,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('r^t_t_b_,_x (m)')
     x = P.t_end - 9*P.t_end/10;
     y = pos(k,end) - pos(k,end)/2;
-    text(x, y, ['Final Value: ', num2str(pos(k,end)), ' m'])
+    text(x, y, ['Final Drift: ', num2str(pos(k,end)), ' m'])
     grid on
     hold off
     
@@ -97,7 +97,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('r^t_t_b_,_y (m)')
     x = P.t_end - 9*P.t_end/10;
     y = pos(k,end) - pos(k,end)/2;
-    text(x, y, ['Final Value: ', num2str(pos(k,end)), ' m'])
+    text(x, y, ['Final Drift: ', num2str(pos(k,end)), ' m'])
     grid on
     hold off
     
@@ -112,7 +112,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('r^t_t_b_,_z (m)')
     x = P.t_end - 9*P.t_end/10;
     y = pos(k,end) - pos(k,end)/2;
-    text(x, y, ['Final Value: ', num2str(pos(k,end)), ' m'])
+    text(x, y, ['Final Drift: ', num2str(pos(k,end)), ' m'])
     grid on
     hold off
     
@@ -131,7 +131,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('v^t_t_b_,_x (m/s)')
     x = P.t_end - 9*P.t_end/10;
     y = vel(k,end) - vel(k,end)/2;
-    text(x, y, ['Final Value: ', num2str(vel(k,end)), ' m/s'])
+    text(x, y, ['Final Drift: ', num2str(vel(k,end)), ' m/s'])
     grid on
     hold off
     
@@ -146,7 +146,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('v^t_t_b_,_y (m/s)')
     x = P.t_end - 9*P.t_end/10;
     y = vel(k,end) - vel(k,end)/2;
-    text(x, y, ['Final Value: ', num2str(vel(k,end)), ' m/s'])
+    text(x, y, ['Final Drift: ', num2str(vel(k,end)), ' m/s'])
     grid on
     hold off
     
@@ -161,7 +161,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('v^t_t_b_,_z (m/s)')
     x = P.t_end - 9*P.t_end/10;
     y = vel(k,end) - vel(k,end)/2;
-    text(x, y, ['Final Value: ', num2str(vel(k,end)), ' m/s'])
+    text(x, y, ['Final Drift: ', num2str(vel(k,end)), ' m/s'])
     grid on
     hold off
     
@@ -179,7 +179,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('\phi^t_t_b (\circ)')
     x = P.t_end - 9*P.t_end/10;
     y = rpy(k,end) - rpy(k,end)/2;
-    text(x, y * 180/pi, ['Final Value: ', num2str(rpy(k,end) * 180/pi), '\circ'])
+    text(x, y * 180/pi, ['Final Drift: ', num2str(rpy(k,end) * 180/pi), '\circ'])
     grid on
     
     % Pitch
@@ -192,7 +192,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('\theta^t_t_b (\circ)')
     x = P.t_end - 9*P.t_end/10;
     y = rpy(k,end) - rpy(k,end)/2;
-    text(x, y * 180/pi, ['Final Value: ', num2str(rpy(k,end) * 180/pi), '\circ'])
+    text(x, y * 180/pi, ['Final Drift: ', num2str(rpy(k,end) * 180/pi), '\circ'])
     grid on
     
     % Yaw
@@ -205,7 +205,7 @@ if (P.plot.plot_meas_flag == true)
     ylabel('\psi^t_t_b (\circ)')
     x = P.t_end - 9*P.t_end/10;
     y = rpy(k,end) - rpy(k,end)/2;
-    text(x, y * 180/pi, ['Final Value: ', num2str(rpy(k,end) * 180/pi), '\circ'])
+    text(x, y * 180/pi, ['Final Drift: ', num2str(rpy(k,end) * 180/pi), '\circ'])
     grid on
     
 end

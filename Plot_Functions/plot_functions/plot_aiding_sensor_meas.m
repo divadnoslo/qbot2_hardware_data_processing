@@ -38,23 +38,23 @@ if (P.plot.plot_aiding_sensor_meas_flag == true)
         
         % Plot Euler Rates of C_t__b_cam
         figure
-        subplot(3,1,1)
-        hold on
-        plot(n, ypr(1,:) * 180/pi, 'r*')
-        title('Kinect Camera:  Roll (\phi^t_t_b)')
-        xlabel('Time (s)')
-        xlim([0 n(end)])
-        ylabel('\phi^t_t_b (\circ)')
-        grid on
-        subplot(3,1,2)
-        hold on
-        plot(n, ypr(2,:) * 180/pi, 'g*')
-        title('Kinect Camera:  Pitch (\theta^t_t_b)')
-        xlabel('Time (s)')
-        xlim([0 n(end)])
-        ylabel('\theta^t_t_b (\circ)')
-        grid on
-        subplot(3,1,3)
+%         subplot(3,1,1)
+%         hold on
+%         plot(n, ypr(1,:) * 180/pi, 'r*')
+%         title('Kinect Camera:  Roll (\phi^t_t_b)')
+%         xlabel('Time (s)')
+%         xlim([0 n(end)])
+%         ylabel('\phi^t_t_b (\circ)')
+%         grid on
+%         subplot(3,1,2)
+%         hold on
+%         plot(n, ypr(2,:) * 180/pi, 'g*')
+%         title('Kinect Camera:  Pitch (\theta^t_t_b)')
+%         xlabel('Time (s)')
+%         xlim([0 n(end)])
+%         ylabel('\theta^t_t_b (\circ)')
+%         grid on
+%         subplot(3,1,3)
         hold on
         plot(n, ypr(3,:) * 180/pi, 'b*')
         title('Kinect Camera:  Yaw (\psi^t_t_b)')
