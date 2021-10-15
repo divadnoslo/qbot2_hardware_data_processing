@@ -18,13 +18,12 @@ load('c__Complete_Data_Sets/SBT_CCW.mat');
 %% Select Plotting Parameters
 
 % Set Desired Plot Flags
-
-P.plot.plot_meas_flag = true;
+P.plot.plot_IMU_meas_flag = true;
 P.plot.plot_aiding_sensor_meas_flag = true;
 P.plot.plot_KF_meas_flag = true;
 P.plot.plot_KF_error_est_flag = true;
 P.plot.plot_PVA_est_flag = true;
-P.plot.full_3D_view_flag = false;
+P.plot.full_3D_view_flag = true;
 
 % Set Ground Truth for Plotting
 % 0.) SBT_CCW

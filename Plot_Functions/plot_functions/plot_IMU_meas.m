@@ -1,7 +1,7 @@
-function plot_meas(out, P)
+function plot_IMU_meas(out, P)
 
 %% Begin Plots
-if (P.plot.plot_meas_flag == true)
+if (P.plot.plot_IMU_meas_flag == true)
 
     %% Data Preparation________________________________________________________
     
@@ -9,11 +9,11 @@ if (P.plot.plot_meas_flag == true)
     t = P.t;
     
     % Extract PVA
-    pos = out.r_t__t_b_meas';
-    vel = out.v_t__t_b_meas';
+    pos = out.r_t__t_b_imu';
+    vel = out.v_t__t_b_imu';
     rpy = zeros(3, length(t));
     for ii = 1 : length(t)
-        [rpy(3,ii), rpy(2,ii), rpy(1,ii)] = dcm2ypr(out.C_t__b_meas(:,:,ii));
+        [rpy(3,ii), rpy(2,ii), rpy(1,ii)] = dcm2ypr(out.C_t__b_imu(:,:,ii));
     end
     
     % Unwrap Yaw
@@ -76,7 +76,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, pos(k,:), 'r')
-    title('Measurement: r^t_t_b_,_x')
+    title('IMU Only Measurement: r^t_t_b_,_x')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('r^t_t_b_,_x (m)')
@@ -91,7 +91,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, pos(k,:), 'g')
-    title('Measurement: r^t_t_b_,_y')
+    title('IMU Only Measurement: r^t_t_b_,_y')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('r^t_t_b_,_y (m)')
@@ -106,7 +106,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, pos(k,:), 'b')
-    title('Measurement: r^t_t_b_,_z')
+    title('IMU Only Measurement: r^t_t_b_,_z')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('r^t_t_b_,_z (m)')
@@ -125,7 +125,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, vel(k,:), 'r')
-    title('Measurement: v^t_t_b_,_x')
+    title('IMU Only Measurement: v^t_t_b_,_x')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('v^t_t_b_,_x (m/s)')
@@ -140,7 +140,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, vel(k,:), 'g')
-    title('Measurement: v^t_t_b_,_y')
+    title('IMU Only Measurement: v^t_t_b_,_y')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('v^t_t_b_,_y (m/s)')
@@ -155,7 +155,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, vel(k,:), 'b')
-    title('Measurement: v^t_t_b_,_z')
+    title('IMU Only Measurement: v^t_t_b_,_z')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('v^t_t_b_,_z (m/s)')
@@ -173,7 +173,7 @@ if (P.plot.plot_meas_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, rpy(k,:) * 180/pi, 'r')
-    title('Measurement: Roll (\phi^t_t_b)')
+    title('IMU Only Measurement: Roll (\phi^t_t_b)')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\phi^t_t_b (\circ)')
@@ -186,7 +186,7 @@ if (P.plot.plot_meas_flag == true)
     k = 2;
     subplot(3,1,k)
     plot(t, rpy(k,:) * 180/pi, 'g')
-    title('Measurement: Pitch (\theta^t_t_b)')
+    title('IMU Only Measurement: Pitch (\theta^t_t_b)')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\theta^t_t_b (\circ)')
@@ -199,7 +199,7 @@ if (P.plot.plot_meas_flag == true)
     k = 3;
     subplot(3,1,k)
     plot(t, rpy(k,:) * 180/pi, 'b')
-    title('Measurement: Yaw (\psi^t_t_b)')
+    title('IMU Only Measurement: Yaw (\psi^t_t_b)')
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\psi^t_t_b (\circ)')
