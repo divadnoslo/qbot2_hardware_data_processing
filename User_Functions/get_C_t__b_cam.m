@@ -2,9 +2,16 @@ function [C_t__b_cam, psi_sigma, SNHT_avail] = get_C_t__b_cam(n_f, n_fw, n_sw, p
 
 %% Estimate what the front wall and side wall align perpendicularly to...
 
+persistent ii
+
+if (isempty(ii))
+    ii = 1;
+end
+
 % Determine Front Wall and Side Wall Axes Estimates
-fw_est = C_t__b_meas(:,1);
-sw_est = C_t__b_meas(:,2);
+C_b__t_est = C_t__b_meas';
+fw_est = C_b__t_est(:,1);
+sw_est = C_b__t_est(:,2);
 
 % Create Possible Tan Frame Alignments
 tan_axes = [ 1, 0, 0; ...
@@ -24,100 +31,60 @@ end
 [~, fw_ind] = min(d_fw);
 [~, sw_ind] = min(d_sw);
 
-% Determine if it meets the threshold.  Threshold is 0.1736, as determined from
-% User_Functions/find_threshold.mlx, which corresponds to the vector being
-% within 20 degrees the selected tan frame axis
-% threshold = 0.1736;
-threshold = 0.32;
+% Assign Axes
+x_t_main = tan_axes(:,fw_ind);
+y_t_main = tan_axes(:,sw_ind);
+z_t_main = [0; 0; 1];    
 
-% When both axes are outside 20 nominal degrees
-if ((d_fw(fw_ind) > threshold) & (d_sw(sw_ind) > threshold))
-    SNHT_avail = 0;
-    fw_axis = [0; 0; 0];
-    sw_axis = [0; 0; 0];
-    psi_fw_sigma = 45 * pi/180;
-    psi_sw_sigma = 45 * pi/180;
-    
-% When both axes are within the threshold  
-elseif ((d_fw(fw_ind) <= threshold) & (d_sw(sw_ind) <= threshold))
-    SNHT_avail = 1;
-    fw_axis = tan_axes(:,fw_ind);
-    sw_axis = tan_axes(:,sw_ind);
-
-% When only the front wall axis is aligned
-elseif ((d_fw(fw_ind) <= threshold) & (d_sw(sw_ind) > threshold))
-    SNHT_avail = 1;
-    fw_axis = tan_axes(:,fw_ind);
-    sw_axis = [0; 0; 0];
-    psi_sw_sigma = 45 * pi/180;
-
-% When only the side wall axis is aligned
-elseif ((d_fw(fw_ind) > threshold) & (d_sw(sw_ind) <= threshold))
-    SNHT_avail = 1;
-    fw_axis = [0; 0; 0];
-    sw_axis = tan_axes(:,sw_ind);
-    psi_fw_sigma = 45 * pi/180;
-    
-else
-    SNHT_avail = 0;
-    fw_axis = [0; 0; 0];
-    sw_axis = [0; 0; 0];
-    psi_fw_sigma = 45 * pi/180;
-    psi_sw_sigma = 45 * pi/180;
-    
-end
-    
 %% Compute C_t__b_cam
 
-if (SNHT_avail == 1)
-    
-    % Assign applicable tan axis to local frame
-    x_l = fw_axis;
-    y_l = sw_axis;
-    z_t = [0; 0; 1];
-    
-    % Define Body Frame Axes from Measurements, and Return Sigmas
-    if (psi_fw_sigma <= psi_sw_sigma)
-        x_b = n_fw;
-        y_b = -(cross(n_fw, n_f));
-        z_b = n_f;
-        psi_sigma = psi_fw_sigma;
-    else
-        x_b = cross(n_sw, n_f);
-        y_b = n_sw;
-        z_b = n_f;
-        psi_sigma = psi_sw_sigma;
-    end
-    
-    % Build DCM
-    C_b__t_cam = [dot(x_b, x_l), dot(y_b, x_l), dot(z_b, x_l); ...
-                  dot(x_b, y_l), dot(y_b, y_l), dot(z_b, y_l); ...
-                  dot(x_b, z_t), dot(y_b, z_t), dot(z_b, z_t)];
-              
-    % Transpose for Final Result
-    C_t__b_cam = C_b__t_cam';
-    
-%% Perform Outlier Rejection
-    
-    % Extract Yaw from Estimate and Camera Measurement
-    [yaw_est, ~, ~] = dcm2ypr(C_t__b_meas);
-    [yaw_cam, ~, ~] = dcm2ypr(C_t__b_cam);
-    
-    % Compute Mahalanobis Distance with throwing away measurements outside of
-    % 15 degrees
-    d = sqrt((yaw_cam - yaw_est) * (yaw_cam - yaw_est)) /(2*pi);
-    
-    % Accept or Reject
-    if (d <= (33/360))
-        SNHT_avail = 1;
-    else
-        SNHT_avail = 0;
-    end
-    
+% Define Body Frame Axes from Measurements, and Return Sigmas
+if (psi_fw_sigma <= psi_sw_sigma)
+    x_t = n_fw;
+    y_t = -(cross(n_fw, n_f));
+    z_t = n_f;
+    psi_sigma = psi_fw_sigma;
 else
-    
-    C_t__b_cam = eye(3);
-    psi_sigma = 45 * pi/180;
-    
+    x_t = cross(n_sw, n_f);
+    y_t = n_sw;
+    z_t = n_f;
+    psi_sigma = psi_sw_sigma;
 end
+
+% Build DCM
+C_b__t_cam = [dot(x_t, x_t_main), dot(y_t, x_t_main), dot(z_t, x_t_main); ...
+              dot(x_t, y_t_main), dot(y_t, y_t_main), dot(z_t, y_t_main); ...
+              dot(x_t, z_t_main), dot(y_t, z_t_main), dot(z_t, z_t_main)];
+
+% Transpose for Final Result
+C_t__b_cam = C_b__t_cam;
+
+%% Perform Outlier Rejection
+
+% Extract Yaw from Estimate and Camera Measurement
+[yaw_est, ~, ~] = dcm2ypr(C_t__b_est);
+[yaw_cam, ~, ~] = dcm2ypr(C_t__b_cam);
+
+% Compute Mahalanobis Distance with throwing away measurements outside of
+% 15 degrees
+yaw_cam = abs(yaw_cam);
+yaw_est = abs(yaw_est);
+d = sqrt((yaw_cam - yaw_est) * (yaw_cam - yaw_est)) /(2*pi);
+
+% Accept or Reject
+if (d <= (22.5/360))
+    SNHT_avail = 1;
+elseif (d >= (350/360))
+    SNHT_avail = 1;
+else
+    SNHT_avail = 0;
+end
+
+if (ii == 30)
+    dummy = 1;
+end
+ii = ii + 1;
+
+end
+
 

@@ -18,10 +18,12 @@ load('c__Complete_Data_Sets/SBT_CCW.mat');
 %% Select Plotting Parameters
 
 % Set Desired Plot Flags
-P.plot.plot_IMU_meas_flag = true;
-P.plot.plot_aiding_sensor_meas_flag = true;
-P.plot.plot_KF_meas_flag = true;
-P.plot.plot_KF_error_est_flag = true;
+P.plot.plot_IMU_meas_flag = false;
+P.plot.plot_aiding_sensor_meas_flag = false;
+P.plot.plot_outlier_reject_flag = true;
+P.plot.plot_KF_meas_flag = false;
+P.plot.plot_KF_error_est_flag =false;
+P.plot.plot_KF_covariance_flag = false;
 P.plot.plot_PVA_est_flag = true;
 P.plot.full_3D_view_flag = true;
 
@@ -115,7 +117,7 @@ P.Ohm_t__i_e = P.C_e__t' * P.Ohm_i__i_e * P.C_e__t;
 
 %% Initialize Measurementes based on first ten seconds
 
-[P.f_b__i_b_meas, P.w_b__i_b_meas] = calibrate_imu(P);
+[P.f_b__i_b_meas, P.w_b__i_b_meas, ~, ~] = calibrate_imu(P);
 
 [P.C_t__b_init, P.H_avg, P.pitch_trans_align] = init_conditions(P);
 

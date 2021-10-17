@@ -5,6 +5,19 @@ if (P.plot.plot_KF_error_est_flag == true)
 
     %% Data Preparation________________________________________________________
     
+    % Set Title
+    if (P.aiding_sensor_config == 0)
+        tit_str = 'IMU Only ';
+    elseif (P.aiding_sensor_config == 4)
+        tit_str = 'IMU + Odo ';
+    elseif (P.aiding_sensor_config == 5)
+        tit_str = 'IMU + Kinect ';
+    elseif (P.aiding_sensor_config == 6)
+        tit_str = 'IMU + Odo + Kinect ';
+    elseif (P.aiding_sensor_config == 7)
+        tit_str = 'IMU + Odo + Kinect + Baro ';
+    end
+    
     % Extract Time
     t = P.t;
     
@@ -27,7 +40,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, pos(k,:), 'r')
-    title('KF Estimate: \deltar^t_t_b_,_x')
+    title([tit_str, 'KF Est: \deltar^t_t_b_,_x'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\deltar^t_t_b_,_x (m)')
@@ -39,7 +52,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, pos(k,:), 'g')
-    title('KF Estimate: \deltar^t_t_b_,_y')
+    title([tit_str, 'KF Est:   \deltar^t_t_b_,_y'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\deltar^t_t_b_,_y (m)')
@@ -51,7 +64,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, pos(k,:), 'b')
-    title('KF Estimate: \deltar^t_t_b_,_z')
+    title([tit_str, 'KF Est:   \deltar^t_t_b_,_z'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\deltar^t_t_b_,_z (m)')
@@ -67,7 +80,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, vel(k,:), 'r')
-    title('KF Estimate: \deltav^t_t_b_,_x')
+    title([tit_str, 'KF Est:   \deltav^t_t_b_,_x'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\deltav^t_t_b_,_x (m/s)')
@@ -79,7 +92,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, vel(k,:), 'g')
-    title('KF Estimate: \deltav^t_t_b_,_y')
+    title([tit_str, 'KF Est:   \deltav^t_t_b_,_y'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\deltav^t_t_b_,_y (m/s)')
@@ -91,7 +104,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, vel(k,:), 'b')
-    title('KF Estimate: \deltav^t_t_b_,_z')
+    title([tit_str, 'KF Est:   \deltav^t_t_b_,_z'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\deltav^t_t_b_,_z (m/s)')
@@ -106,7 +119,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     hold on
     subplot(3,1,k)
     plot(t, rpy(k,:) * 180/pi, 'r')
-    title('KF Estimate:  (\delta\phi^t_t_b)')
+    title([tit_str, 'KF Est:  (\delta\phi^t_t_b)'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\delta\phi^t_t_b (\circ)')
@@ -116,7 +129,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     k = 2;
     subplot(3,1,k)
     plot(t, rpy(k,:) * 180/pi, 'g')
-    title('KF Estimate:  (\delta\theta^t_t_b)')
+    title([tit_str, 'KF Est:  (\delta\theta^t_t_b)'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\delta\theta^t_t_b (\circ)')
@@ -126,7 +139,7 @@ if (P.plot.plot_KF_error_est_flag == true)
     k = 3;
     subplot(3,1,k)
     plot(t, rpy(k,:) * 180/pi, 'b')
-    title('KF Estimate:  (\delta\psi^t_t_b)')
+    title([tit_str, 'KF Est:  (\delta\psi^t_t_b)'])
     xlabel('Time (s)')
     xlim([0 P.t_end])
     ylabel('\delta\psi^t_t_b (\circ)')
