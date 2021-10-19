@@ -20,9 +20,9 @@ load('c__Complete_Data_Sets/SBT_CCW.mat');
 % Set Desired Plot Flags
 P.plot.plot_IMU_meas_flag = false;
 P.plot.plot_aiding_sensor_meas_flag = false;
-P.plot.plot_outlier_reject_flag = true;
+P.plot.plot_outlier_reject_flag = false;
 P.plot.plot_KF_meas_flag = false;
-P.plot.plot_KF_error_est_flag =false;
+P.plot.plot_KF_error_est_flag = false;
 P.plot.plot_KF_covariance_flag = false;
 P.plot.plot_PVA_est_flag = false;
 P.plot.full_3D_view_flag = true;
