@@ -67,8 +67,8 @@ C_t__b_cam = C_b__t_cam;
 
 % Compute Mahalanobis Distance with throwing away measurements outside of
 % 15 degrees
-yaw_cam = abs(yaw_cam);
-yaw_est = abs(yaw_est);
+% yaw_cam = abs(yaw_cam);
+% yaw_est = abs(yaw_est);
 d = sqrt((yaw_cam - yaw_est) * (yaw_cam - yaw_est)) /(2*pi);
 
 % Accept or Reject
