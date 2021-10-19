@@ -24,7 +24,7 @@ P.plot.plot_outlier_reject_flag = true;
 P.plot.plot_KF_meas_flag = false;
 P.plot.plot_KF_error_est_flag =false;
 P.plot.plot_KF_covariance_flag = false;
-P.plot.plot_PVA_est_flag = true;
+P.plot.plot_PVA_est_flag = false;
 P.plot.full_3D_view_flag = true;
 
 % Set Ground Truth for Plotting

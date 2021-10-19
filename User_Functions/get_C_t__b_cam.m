@@ -1,12 +1,6 @@
-function [C_t__b_cam, psi_sigma, SNHT_avail] = get_C_t__b_cam(n_f, n_fw, n_sw, psi_fw_sigma, psi_sw_sigma, C_t__b_meas, C_t__b_est)
+function [C_t__b_cam, psi_sigma] = get_C_t__b_cam(n_f, n_fw, n_sw, psi_fw_sigma, psi_sw_sigma, C_t__b_meas, C_t__b_est)
 
 %% Estimate what the front wall and side wall align perpendicularly to...
-
-persistent ii
-
-if (isempty(ii))
-    ii = 1;
-end
 
 % Determine Front Wall and Side Wall Axes Estimates
 C_b__t_est = C_t__b_meas';
@@ -58,32 +52,6 @@ C_b__t_cam = [dot(x_t, x_t_main), dot(y_t, x_t_main), dot(z_t, x_t_main); ...
 
 % Transpose for Final Result
 C_t__b_cam = C_b__t_cam;
-
-%% Perform Outlier Rejection
-
-% Extract Yaw from Estimate and Camera Measurement
-[yaw_est, ~, ~] = dcm2ypr(C_t__b_est);
-[yaw_cam, ~, ~] = dcm2ypr(C_t__b_cam);
-
-% Compute Mahalanobis Distance with throwing away measurements outside of
-% 15 degrees
-% yaw_cam = abs(yaw_cam);
-% yaw_est = abs(yaw_est);
-d = sqrt((yaw_cam - yaw_est) * (yaw_cam - yaw_est)) /(2*pi);
-
-% Accept or Reject
-if (d <= (22.5/360))
-    SNHT_avail = 1;
-elseif (d >= (350/360))
-    SNHT_avail = 1;
-else
-    SNHT_avail = 0;
-end
-
-if (ii == 30)
-    dummy = 1;
-end
-ii = ii + 1;
 
 end
 

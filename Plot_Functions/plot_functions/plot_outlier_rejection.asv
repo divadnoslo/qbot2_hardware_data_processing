@@ -61,20 +61,18 @@ if (P.plot.plot_outlier_reject_flag == 1)
     y = 0;
     text(x, y, ['Final Value:  ', num2str(psi_est_post(end)*180/pi), '\circ'])
     
-%     %% Outlier Info
-%     
-%     mask_1_Hz = ((out.SNHT_avail == 1) | (out.SNHT_avail == 0));
-%     d = out.d(mask_1_Hz);
-%     t = P.t(mask_1_Hz);
-%     
-%     figure
-%     hold on
-%     plot(t, d, 'b*')
-%     title('Computed Mahalanobis Distance')
-%     xlabel('Time (s)')
-%     ylabel('Mahalanobis Distance')
-%     grid on
-%     
+    %% Outlier Info
+    
+    mask_1_Hz = ((out.SNHT_avail == 1) | (out.SNHT_avail == 0));
+    d = out.d(mask_1_Hz);
+    t = P.t(mask_1_Hz);
+    
+    figure
+    hold on
+    plot(t, d, 'b*')
+    title('Computed Mahalanobis Distance')
+    xlabel('Time
+    
     
 end
 
