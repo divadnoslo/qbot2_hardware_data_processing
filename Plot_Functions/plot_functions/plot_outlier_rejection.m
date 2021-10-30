@@ -36,12 +36,12 @@ if (P.plot.plot_outlier_reject_flag == 1)
     psi_est_KF = psi_est_KF_new;
     n = 1 : length(psi_est_KF);
     
-    % Unwrap Everything
-    psi_meas = unwrap(psi_meas);
-    psi_est_KF = unwrap(psi_est_KF);
-    psi_est_post = unwrap(psi_est_post);
-    psi_accepted = unwrap(psi_accepted);
-    psi_rejected = unwrap(psi_rejected);
+%     % Unwrap Everything
+%     psi_meas = unwrap(psi_meas);
+%     psi_est_KF = unwrap(psi_est_KF);
+%     psi_est_post = unwrap(psi_est_post);
+%     psi_accepted = unwrap(psi_accepted);
+%     psi_rejected = unwrap(psi_rejected);
     
     % Plot Accepted vs. Rejected Results
     figure
@@ -56,7 +56,7 @@ if (P.plot.plot_outlier_reject_flag == 1)
     ylabel('(\circ)')
     grid on
     xlim([0 floor(P.t(end))+1])
-    legend('Yaw from IMU', 'Attitude Input into C cam', 'Post Yaw from KF', 'Accepted', 'Rejected', 'Location', 'SouthWest')
+    legend('Yaw from IMU', 'Attitude Input into C cam', 'Post Yaw from KF', 'Accepted', 'Rejected', 'Location', 'Best')
     x = (3/5) * P.t(end);
     y = 0;
     text(x, y, ['Final Value:  ', num2str(psi_est_post(end)*180/pi), '\circ'])

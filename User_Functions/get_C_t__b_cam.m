@@ -35,11 +35,11 @@ z_t_main = [0; 0; 1];
 % Define Body Frame Axes from Measurements, and Return Sigmas
 if (psi_fw_sigma <= psi_sw_sigma)
     x_t = n_fw;
-    y_t = -(cross(n_fw, n_f));
+    y_t = (cross(n_fw, n_f));
     z_t = n_f;
     psi_sigma = psi_fw_sigma;
 else
-    x_t = cross(n_sw, n_f);
+    x_t = -cross(n_sw, n_f);
     y_t = n_sw;
     z_t = n_f;
     psi_sigma = psi_sw_sigma;

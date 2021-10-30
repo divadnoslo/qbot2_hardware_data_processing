@@ -13,25 +13,25 @@ addpath('Nav_Functions', 'Plot_Functions', ...
 %% Load Desired Data
 
 % Load Data File
-load('c__Complete_Data_Sets/SBT_CCW.mat');    
+load('c__Complete_Data_Sets/SBT_CW.mat');    
 
 %% Select Plotting Parameters
 
 % Set Desired Plot Flags
 P.plot.plot_IMU_meas_flag = false;
 P.plot.plot_aiding_sensor_meas_flag = false;
-P.plot.plot_outlier_reject_flag = false;
+P.plot.plot_outlier_reject_flag = true;
 P.plot.plot_KF_meas_flag = false;
 P.plot.plot_KF_error_est_flag = false;
 P.plot.plot_KF_covariance_flag = false;
 P.plot.plot_PVA_est_flag = false;
-P.plot.full_3D_view_flag = true;
+P.plot.full_3D_view_flag = false;
 
 % Set Ground Truth for Plotting
 % 0.) SBT_CCW
 % 1.) SBT_CW
 % 2.) King Building
-P.plot.ground_truth = 0;
+P.plot.ground_truth = 1;
 
 %% Select Aiding Sensor Configuration
 

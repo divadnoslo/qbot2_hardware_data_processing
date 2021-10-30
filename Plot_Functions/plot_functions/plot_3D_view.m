@@ -44,10 +44,10 @@ if (P.plot.full_3D_view_flag == true)
         line([2.8, 0], [-2.8, -2.8], [0, 0], 'Color', 'k', 'LineStyle', '--')
         line([0, 0], [-2.8, 0], [0, 0], 'Color', 'k', 'LineStyle', '--')
         % Outside Walls
-        line([-1, 3.8], [-1, -1], [0, 0], 'Color', 'k', 'LineStyle', '--')
-        line([3.8, 3.8], [-1, -3.8], [0, 0], 'Color', 'k', 'LineStyle', '--')
-        line([3.8, -1], [-2.8, -3.8], [0, 0], 'Color', 'k', 'LineStyle', '--')
-        line([-1, -1], [-3.8, -1], [0, 0], 'Color', 'k', 'LineStyle', '--')
+        line([-1, 3.8], [1, 1], [0, 0], 'Color', 'k', 'LineStyle', '-')
+        line([3.8, 3.8], [1, -3.8], [0, 0], 'Color', 'k', 'LineStyle', '-')
+        line([3.8, -1], [-3.8, -3.8], [0, 0], 'Color', 'k', 'LineStyle', '-')
+        line([-1, -1], [-3.8, 1], [0, 0], 'Color', 'k', 'LineStyle', '-')
     end
     
     

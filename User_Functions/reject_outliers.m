@@ -31,11 +31,11 @@ sigma_est = R_e(3,3);
 sigma_tot = psi_sigma + sigma_est;
 var_yaw_error = sigma_tot^2;
 
-% Compute Mahalanobis
+% Compute Mahalanobis Distance
 d = sqrt((yaw_cam - yaw_est) * (1/var_yaw_error) * (yaw_cam - yaw_est));
 
 % Accept or Reject
-if (d <= 0.75)
+if (d <= 0.75) % 0.75 - 1.5
     SNHT_avail = 1;
 else
     SNHT_avail = 0;

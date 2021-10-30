@@ -46,12 +46,13 @@ if (P.plot.plot_KF_meas_flag == true)
     if ((P.aiding_sensor_config == 5) || (P.aiding_sensor_config == 6) || (P.aiding_sensor_config == 7))
         
         % Determine Number of Frames
-        num_frames = sum(out.SNHT_avail);
+        num_frames = sum(out.SNHT_avail == 1 | out.SNHT_avail == 0);
         n = 1 : num_frames;
         ypr = zeros(3, num_frames);
         
         % Shorten Down delta_C_t__b_meas
-        z_k_2 = out.z_k_2(logical(out.SNHT_avail), :);
+        mask = (out.SNHT_avail == 1) | (out.SNHT_avail == 0);
+        z_k_2 = out.z_k_2(mask, :);
         
         % Plot delta_C_t__b_meas Results
         for k = 1 : num_frames
