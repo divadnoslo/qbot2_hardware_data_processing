@@ -48,14 +48,20 @@ if (P.plot.plot_aiding_sensor_meas_flag == true)
         psi_rejected = psi(mask_rejected);
         
         % Plot Euler Rates of C_t__b_cam
+        nd = floor(P.t(end)) + 1;
         figure
         hold on
+        line([0 nd], [0 0], 'Color', 'y', 'LineWidth', 0.5)
+        line([0 nd], [90 90], 'Color', 'y', 'LineWidth', 0.5)
+        line([0 nd], [180 180], 'Color', 'y', 'LineWidth', 0.5)
+        line([0 nd], [-90 -90], 'Color', 'y', 'LineWidth', 0.5)
+        line([0 nd], [-180 -180], 'Color', 'y', 'LineWidth', 0.5)
         plot(P.t, psi_meas * 180/pi, 'k')
         plot(t_accepted, psi_accepted * 180/pi, 'b*', ...
-             t_rejected, psi_rejected * 180/pi, 'r*')
+            t_rejected, psi_rejected * 180/pi, 'r*')
         title('Kinect Camera:  Yaw (\psi^t_t_b)')
         xlabel('Time (s)')
-%         xlim([0 n(end)])
+        %         xlim([0 n(end)])
         ylabel('\psi^t_t_b (\circ)')
         grid on
         

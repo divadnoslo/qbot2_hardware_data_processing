@@ -3,9 +3,8 @@ function [C_t__b_cam, psi_sigma] = get_C_t__b_cam(n_f, n_fw, n_sw, psi_fw_sigma,
 %% Estimate what the front wall and side wall align perpendicularly to...
 
 % Determine Front Wall and Side Wall Axes Estimates
-C_b__t_est = C_t__b_meas';
-fw_est = C_b__t_est(:,1);
-sw_est = C_b__t_est(:,2);
+fw_est = C_t__b_meas(:,1);
+sw_est = C_t__b_meas(:,2);
 
 % Create Possible Tan Frame Alignments
 tan_axes = [ 1, 0, 0; ...
@@ -35,11 +34,11 @@ z_t_main = [0; 0; 1];
 % Define Body Frame Axes from Measurements, and Return Sigmas
 if (psi_fw_sigma <= psi_sw_sigma)
     x_t = n_fw;
-    y_t = (cross(n_fw, n_f));
+    y_t = -(cross(n_fw, n_f));
     z_t = n_f;
     psi_sigma = psi_fw_sigma;
 else
-    x_t = -cross(n_sw, n_f);
+    x_t = cross(n_sw, n_f);
     y_t = n_sw;
     z_t = n_f;
     psi_sigma = psi_sw_sigma;
@@ -51,7 +50,7 @@ C_b__t_cam = [dot(x_t, x_t_main), dot(y_t, x_t_main), dot(z_t, x_t_main); ...
               dot(x_t, z_t_main), dot(y_t, z_t_main), dot(z_t, z_t_main)];
 
 % Transpose for Final Result
-C_t__b_cam = C_b__t_cam;
+C_t__b_cam = C_b__t_cam';
 
 end
 

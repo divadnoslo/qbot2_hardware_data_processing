@@ -44,8 +44,14 @@ if (P.plot.plot_outlier_reject_flag == 1)
 %     psi_rejected = unwrap(psi_rejected);
     
     % Plot Accepted vs. Rejected Results
+    nd = floor(P.t(end)) + 1;
     figure
     hold on
+    line([0 nd], [0 0], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [90 90], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [180 180], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [-90 -90], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [-180 -180], 'Color', 'y', 'LineWidth', 0.5)
     plot(P.t, psi_meas * 180/pi, 'k-', ...
          n, psi_est_KF * 180/pi, 'c*', ...
          P.t, psi_est_post * 180/pi, 'g-')

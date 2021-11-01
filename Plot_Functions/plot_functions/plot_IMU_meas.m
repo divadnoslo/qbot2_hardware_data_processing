@@ -208,4 +208,20 @@ if (P.plot.plot_IMU_meas_flag == true)
     text(x, y * 180/pi, ['Final Drift: ', num2str(rpy(k,end) * 180/pi), '\circ'])
     grid on
     
+    % Plot Yaw Only
+    nd = floor(P.t(end)) + 1;
+    figure
+    hold on
+    line([0 nd], [0 0], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [90 90], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [180 180], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [270 270], 'Color', 'y', 'LineWidth', 0.5)
+    line([0 nd], [360 360], 'Color', 'y', 'LineWidth', 0.5)
+    plot(t, rpy(k,:) * 180/pi, 'b')
+    title('IMU Only Measurement: Yaw (\psi^t_t_b)')
+    xlabel('Time (s)')
+    xlim([0 P.t_end])
+    ylabel('\psi^t_t_b (\circ)')
+    grid on
+    
 end
