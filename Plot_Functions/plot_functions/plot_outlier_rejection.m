@@ -15,6 +15,8 @@ if (P.plot.plot_outlier_reject_flag == 1)
         [psi_est_post(k), ~, ~] = dcm2ypr(out.C_t__b_est(:,:,k));
     end
     
+%     psi = unwrap(psi);
+    
     % Capture Accepted Measurements
     mask_accepted = (out.SNHT_avail == 1);
     t_accepted = P.t(mask_accepted);
@@ -36,36 +38,35 @@ if (P.plot.plot_outlier_reject_flag == 1)
     psi_est_KF = psi_est_KF_new;
     n = 1 : length(psi_est_KF);
     
-%     % Unwrap Everything
-%     psi_meas = unwrap(psi_meas);
-%     psi_est_KF = unwrap(psi_est_KF);
-%     psi_est_post = unwrap(psi_est_post);
-%     psi_accepted = unwrap(psi_accepted);
-%     psi_rejected = unwrap(psi_rejected);
+    % Unwrap Everything
+    psi_meas = unwrap(psi_meas);
+    psi_est_KF = unwrap(psi_est_KF);
+    psi_est_post = unwrap(psi_est_post);
+    psi_accepted = unwrap(psi_accepted);
+    psi_rejected = unwrap(psi_rejected);
+    
+    % Manual Unwrap
+    mask = t_rejected > 30;
+    psi_rejected(mask) = psi_rejected(mask) + 2*pi;
     
     % Plot Accepted vs. Rejected Results
     nd = floor(P.t(end)) + 1;
     figure
     hold on
-    line([0 nd], [0 0], 'Color', 'y', 'LineWidth', 0.5)
-    line([0 nd], [90 90], 'Color', 'y', 'LineWidth', 0.5)
-    line([0 nd], [180 180], 'Color', 'y', 'LineWidth', 0.5)
-    line([0 nd], [-90 -90], 'Color', 'y', 'LineWidth', 0.5)
-    line([0 nd], [-180 -180], 'Color', 'y', 'LineWidth', 0.5)
     plot(P.t, psi_meas * 180/pi, 'k-', ...
-         n, psi_est_KF * 180/pi, 'c*', ...
          P.t, psi_est_post * 180/pi, 'g-')
     plot(t_accepted, psi_accepted * 180/pi, 'b*', ...
-        t_rejected, psi_rejected * 180/pi, 'r*')
-    title('Accepted vs. Rejected SNHT Measurements')
+         t_rejected, psi_rejected * 180/pi, 'r*')
+    title('Outlier Rejection Example')
     xlabel('Time (s)')
-    ylabel('(\circ)')
+    ylabel('Yaw (\psi) (\circ)')
     grid on
     xlim([0 floor(P.t(end))+1])
-    legend('Yaw from IMU', 'Attitude Input into C cam', 'Post Yaw from KF', 'Accepted', 'Rejected', 'Location', 'Best')
-    x = (3/5) * P.t(end);
-    y = 0;
-    text(x, y, ['Final Value:  ', num2str(psi_est_post(end)*180/pi), '\circ'])
+%     yticks([0 45 90 135 180 225 270 315 360 405])
+    legend('Yaw from IMU', 'KF Estimate of Yaw', 'Accepted Cam Meas', 'Rejected Cam Meas', 'Location', 'SouthEast')
+%     x = (3/5) * P.t(end);
+%     y = 0;
+%     text(x, y, ['Final Value:  ', num2str(psi_est_post(end)*180/pi), '\circ'])
     
 %     %% Outlier Info
 %     

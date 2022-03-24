@@ -13,7 +13,7 @@ addpath('Nav_Functions', 'Plot_Functions', ...
 %% Load Desired Data
 
 % Load Data File
-load('c__Complete_Data_Sets/SBT_CW.mat');    
+load('c__Complete_Data_Sets/SBT_CW_Adjusted.mat');    
 
 %% Select Plotting Parameters
 

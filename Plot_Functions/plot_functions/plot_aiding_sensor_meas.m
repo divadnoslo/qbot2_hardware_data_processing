@@ -8,6 +8,14 @@ if (P.plot.plot_aiding_sensor_meas_flag == true)
     %% Plot Odometry Body Frame Speed Measurements
     if ((P.aiding_sensor_config == 4) || (P.aiding_sensor_config == 6) || (P.aiding_sensor_config == 7))
         
+        figure
+        plot(t(1:end-1), diff(P.odo(:,1)) * P.Fs, 'r', t(1:end-1), diff(P.odo(:,2)) * P.Fs, 'g')
+        title('Odometry Wheel Velocities')
+        xlabel('Time (s)')
+        ylabel('Wheel Speeds (m/s)')
+        legend('Right Wheel', 'Left Wheel', 'Location', "SouthEast")
+        grid on
+        
         % Plot Body Frame Speed
         figure
         hold on
